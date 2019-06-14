@@ -43,7 +43,7 @@ if (length(search) == 0) {
                               stringsAsFactors = FALSE,
                               header = TRUE)
         head(initial, n = 10)
-        # 1.4 Define the variables namess and types   
+        # 1.4 Define the variables names and types   
         col.names <- colnames(initial) 
         col.classes <- c("character", "character", "numeric", "numeric", 
                          "numeric", "numeric", "numeric", "numeric", "numeric")

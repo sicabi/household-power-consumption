@@ -28,7 +28,7 @@ if (length(search) == 0) {
         file.url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
         zip.name <- "household_power_consumption.zip"
         file.name <- "household_power_consumption.txt"
-# 1.2 Download and unzip the data set
+        # 1.2 Download and unzip the data set
         if (!file.exists(zip.name)) {
                 download.file(url = file.url, destfile = zip.name, 
                               method = "curl", quiet = FALSE)
@@ -36,20 +36,20 @@ if (length(search) == 0) {
         if (!file.exists(file.name)) {
                 unzip(zipfile = zip.name, setTimes = TRUE)
         }
-# 1.3 Load the first 1000 rows to see the format of each variable
+        # 1.3 Load the first 1000 rows to see the format of each variable
         initial <- read.table(file.name, nrows = 1000, 
                               sep = ";",
                               stringsAsFactors = FALSE,
                               header = TRUE)
         head(initial, n = 10)
-# 1.4 Define the variables namess and types   
+        # 1.4 Define the variables names and types   
         col.names <- colnames(initial) 
         col.classes <- c("character", "character", "numeric", "numeric", 
                          "numeric", "numeric", "numeric", "numeric", "numeric")
-# 1.5 Extract the rows id for Februray 1st and 2nd from the data set        
+        # 1.5 Extract the rows id for Februray 1st and 2nd from the data set        
         lines <- grep("^1/2/2007|^2/2/2007", readLines(file.name), 
                       value = FALSE)
-# 1.5 Import the extracted lines into a data.frame. using the rows id
+        # 1.5 Import the extracted lines into a data.frame. using the rows id
         house.power.comp <- read.table(file = file.name, header = FALSE, 
                                        sep = ";", dec = ".", 
                                        stringsAsFactors = FALSE, 
@@ -57,17 +57,17 @@ if (length(search) == 0) {
                                        nrows = length(lines), 
                                        colClasses = col.classes, 
                                        na.strings = "?", col.names = col.names)
-# 1.6 Clean the data frame
+        # 1.6 Clean the data frame
         str(house.power.comp)
         house.power.comp$Date <- as.Date(house.power.comp$Date, 
                                          format = "%d/%m/%Y")
         house.power.comp$Date <- with(house.power.comp, 
                                       paste(Date, "T", Time, sep = " "))
-# 1.7 Assign data.time format (household was located in Sceaux, near Paris)
+        # 1.7 Assign the time format (household located in Sceaux, near Paris)
         house.power.comp$Date <- strptime(house.power.comp$Date, 
                                             format = c("%Y-%m-%d T %H:%M:%S"), 
                                             tz = "Europe/Paris") 
-# 1.8 Delete downloaded and extracted files to save disk space
+        # 1.8 Delete downloaded and extracted files to save disk space
         file.remove(file.name)
         file.remove(zip.name)
 }
